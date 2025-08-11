@@ -51,8 +51,9 @@ def criar():
 def login():
     proxima = request.args.get('proxima')
     return render_template('login.html', proxima=proxima)
+ 
 
-@app.route('/autenticar', methods=['POST', ])
+@app.route('/autenticar', methods=['POST'])
 def autenticar():
     if request.form['usuario'] in usuarios:
         usuario = usuarios[request.form['usuario']]
