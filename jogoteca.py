@@ -40,9 +40,9 @@ def novo():
 
 @app.route('/criar', methods=['POST',])
 def criar():
-    nome = request. form['nome']
-    categoria = request. form['categoria']
-    console = request. form['console']
+    nome = request.form['nome']
+    categoria = request.form['categoria']
+    console = request.form['console']
     jogo = Jogo(nome, categoria, console)
     lista.append(jogo)
     return redirect(url_for('index'))
@@ -51,7 +51,7 @@ def criar():
 def login():
     proxima = request.args.get('proxima')
     return render_template('login.html', proxima=proxima)
- 
+
 
 @app.route('/autenticar', methods=['POST'])
 def autenticar():
@@ -62,6 +62,9 @@ def autenticar():
             flash(usuario.nickname + ' logado com sucesso!')
             proxima_pagina = request.form['proxima']
             return redirect(proxima_pagina)
+        else:
+            flash('Senha incorreta.')
+            return redirect(url_for('login'))
     else:
         flash('Usuário não logado.')
         return redirect(url_for('login'))
