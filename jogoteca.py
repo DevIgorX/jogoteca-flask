@@ -1,4 +1,8 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
+from flask_sqlalchemy import SQLAlchemy
+
+
+
 
 class Jogo:
     def __init__(self, nome, categoria, console):
@@ -27,6 +31,9 @@ usuarios = { usuario1.nickname : usuario1,
 
 app = Flask(__name__)
 app.secret_key = 'alura'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///jogoteca.db' #uri que faz a conexão com o banco 
+
+db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
@@ -35,7 +42,7 @@ def index():
 @app.route('/novo')
 def novo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect(url_for('login', proxima=url_for('novo')))
+        return redirect(url_for('login', proxima=url_for('novo'))) #proxima=url_for('novo') esse paramentro, vai virar uma query string na URL do login, exemplo: /login?proxima=/novo
     return render_template('novo.html', titulo='Novo Jogo')
 
 @app.route('/criar', methods=['POST',])
@@ -49,7 +56,7 @@ def criar():
 
 @app.route('/login')
 def login():
-    proxima = request.args.get('proxima')
+    proxima = request.args.get('proxima') #essa variavel guardar o valor: "/novo"
     return render_template('login.html', proxima=proxima)
 
 
