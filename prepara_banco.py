@@ -19,8 +19,8 @@ TABLES['Jogos'] = '''
 
 TABLES['Usuarios'] = '''
     CREATE TABLE IF NOT EXISTS usuarios (
-        nome TEXT NOT NULL,
         nickname TEXT PRIMARY KEY,
+        nome TEXT NOT NULL,
         senha TEXT NOT NULL
     );
 '''
