@@ -26,14 +26,14 @@ def criar():
 
     if jogo:
         flash('jogo já existente!')
-        return redirect(url_for('index'))
+        return redirect(url_for('rotas.index'))
     
 
     novo_jogo = Jogos(nome=nome, categoria=categoria, console=console) # type: ignore
     db.session.add(novo_jogo)
     db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('rotas.index'))
 
 @rotas.route('/login')
 def login():
@@ -52,13 +52,13 @@ def autenticar():
             return redirect(proxima_pagina)
         else:
             flash('Senha incorreta.')
-            return redirect(url_for('login'))
+            return redirect(url_for('rotas.login'))
     else:
         flash('Usuário não logado.')
-        return redirect(url_for('login'))
+        return redirect(url_for('rotas.login'))
 
 @rotas.route('/logout')
 def logout():
     session['usuario_logado'] = None
     flash('Logout efetuado com sucesso!')
-    return redirect(url_for('index'))
+    return redirect(url_for('rotas.index'))
