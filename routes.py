@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session, flash, url_for, Blueprint
+from flask import render_template, request, redirect, session, flash, url_for, Blueprint, jsonify
 from models import Jogos, Usuarios
 from extension import db
 
@@ -56,6 +56,20 @@ def autenticar():
     else:
         flash('Usuário não logado.')
         return redirect(url_for('rotas.login'))
+    
+
+
+@rotas.route('/editar')
+def editar():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login', proxima=url_for('editar')))
+    return render_template('editar.html', titulo='Editando Jogo')
+
+
+@rotas.route('/atualizar', methods=['POST'])
+def atualizar():
+   return redirect(url_for('rotas.index'))
+
 
 @rotas.route('/logout')
 def logout():
