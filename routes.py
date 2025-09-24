@@ -13,7 +13,7 @@ def index():
 @rotas.route('/novo')
 def novo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect(url_for('login', proxima=url_for('novo'))) #proxima=url_for('novo') esse paramentro, vai virar uma query string na URL do login, exemplo: /login?proxima=/novo
+        return redirect(url_for('rotas.login', proxima=url_for('rotas.novo'))) #proxima=url_for('novo') esse paramentro, vai virar uma query string na URL do login, exemplo: /login?proxima=/novo
     return render_template('novo.html', titulo='Novo Jogo')
 
 @rotas.route('/criar', methods=['POST',])
@@ -43,7 +43,7 @@ def login():
 
 @rotas.route('/autenticar', methods=['POST'])
 def autenticar():
-    usuario = Usuarios.query.filter_by(nickaname=request.form['usuario']).first()
+    usuario = Usuarios.query.filter_by(nickname=request.form['usuario']).first()
     if usuario:
         if request.form['senha'] == usuario.senha:
             session['usuario_logado'] = usuario.nickname
@@ -59,16 +59,29 @@ def autenticar():
     
 
 
-@rotas.route('/editar')
-def editar():
+@rotas.route('/editar/<int:id>')
+def editar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect(url_for('login', proxima=url_for('editar')))
-    return render_template('editar.html', titulo='Editando Jogo')
+        return redirect(url_for('rotas.login', proxima=url_for('rotas.editar')))
+    
+    jogo = Jogos.query.filter_by(id=id).first()
+    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo)
 
 
 @rotas.route('/atualizar', methods=['POST'])
 def atualizar():
+   
+   jogo = Jogos.query.filter_by(id= request.form['id']).first()
+
+   jogo.nome = request.form['nome'] # type: ignore
+   jogo.categoria = request.form['categoria'] # type: ignore
+   jogo.console = request.form['console'] # type: ignore
+
+   db.session.add(jogo)
+   db.session.commit()
+
    return redirect(url_for('rotas.index'))
+
 
 
 @rotas.route('/logout')
