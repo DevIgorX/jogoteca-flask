@@ -82,6 +82,16 @@ def atualizar():
 
    return redirect(url_for('rotas.index'))
 
+@rotas.route('/deletar/<int:id>')
+def deletar(id):
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('rotas.login'))
+    
+    Jogos.query.filter_by(id=id).delete()
+    db.session.commit()
+    flash('Jogo Deletado!')
+    return redirect(url_for('rotas.index'))
+
 
 
 @rotas.route('/logout')
