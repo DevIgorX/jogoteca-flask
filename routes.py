@@ -33,6 +33,9 @@ def criar():
     db.session.add(novo_jogo)
     db.session.commit()
 
+    arquivo = request.files['arquivo']
+    arquivo.save(f'uploads/{arquivo.filename}')
+
     return redirect(url_for('rotas.index'))
 
 @rotas.route('/login')
