@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session, flash, url_for, Blueprint, jsonify
+from flask import render_template, request, redirect, session, flash, url_for, Blueprint, current_app
 from models import Jogos, Usuarios
 from extension import db
 
@@ -34,7 +34,8 @@ def criar():
     db.session.commit()
 
     arquivo = request.files['arquivo']
-    arquivo.save(f'uploads/{arquivo.filename}')
+    upload_path = current_app.config['UPLOAD_PATH']
+    arquivo.save(f'{upload_path}/capa{novo_jogo.id}.jpg')
 
     return redirect(url_for('rotas.index'))
 
