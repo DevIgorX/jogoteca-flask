@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session, flash, url_for, Blueprint, current_app
+from flask import render_template, request, redirect, session, flash, url_for, Blueprint, current_app , send_from_directory
 from models import Jogos, Usuarios
 from extension import db
 
@@ -53,7 +53,10 @@ def autenticar():
             session['usuario_logado'] = usuario.nickname
             flash(usuario.nickname + ' logado com sucesso!')
             proxima_pagina = request.form['proxima']
-            return redirect(proxima_pagina)
+            if proxima_pagina:
+             return redirect(proxima_pagina)
+        
+            return redirect(url_for('rotas.index'))
         else:
             flash('Senha incorreta.')
             return redirect(url_for('rotas.login'))
@@ -103,3 +106,7 @@ def logout():
     session['usuario_logado'] = None
     flash('Logout efetuado com sucesso!')
     return redirect(url_for('rotas.index'))
+
+@rotas.route('/uploads/<nome_arquivo>')
+def imagem(nome_arquivo):
+    return send_from_directory('uploads', nome_arquivo) #pega a imagem no diretorio e retorna
