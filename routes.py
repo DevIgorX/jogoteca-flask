@@ -109,4 +109,4 @@ def logout():
 
 @rotas.route('/uploads/<nome_arquivo>')
 def imagem(nome_arquivo):
-    return send_from_directory('uploads', nome_arquivo) #pega a imagem no diretorio e retorna
+    return send_from_directory('uploads', nome_arquivo) #pega a imagem no diretorio e retorna, no caso pega a imagem do coputador e envia para a tela do usuario
