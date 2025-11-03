@@ -2,6 +2,8 @@ from flask import render_template, request, redirect, session, flash, url_for, B
 from models import Jogos, Usuarios
 from extension import db
 
+from helpers import recupera_imagem
+
 
 rotas = Blueprint('rotas',__name__)
 
@@ -72,7 +74,8 @@ def editar(id):
         return redirect(url_for('rotas.login', proxima=url_for('rotas.editar')))
     
     jogo = Jogos.query.filter_by(id=id).first()
-    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo)
+    capa_jogo = recupera_imagem(id)
+    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo, capa_jogo=capa_jogo)
 
 
 @rotas.route('/atualizar', methods=['POST'])
@@ -86,6 +89,11 @@ def atualizar():
 
    db.session.add(jogo)
    db.session.commit()
+
+   arquivo = request.files['arquivo']
+   upload_path = current_app.config['UPLOAD_PATH']
+   arquivo.save(f'{upload_path}/capa{jogo.id}.jpg')
+
 
    return redirect(url_for('rotas.index'))
 
@@ -110,3 +118,4 @@ def logout():
 @rotas.route('/uploads/<nome_arquivo>')
 def imagem(nome_arquivo):
     return send_from_directory('uploads', nome_arquivo) #pega a imagem no diretorio e retorna, no caso pega a imagem do coputador e envia para a tela do usuario
+
