@@ -1,8 +1,9 @@
 from flask import render_template, request, redirect, session, flash, url_for, Blueprint, current_app , send_from_directory
 from models import Jogos, Usuarios
 from extension import db
-
 from helpers import recupera_imagem
+import time
+
 
 
 rotas = Blueprint('rotas',__name__)
@@ -37,7 +38,8 @@ def criar():
 
     arquivo = request.files['arquivo']
     upload_path = current_app.config['UPLOAD_PATH']
-    arquivo.save(f'{upload_path}/capa{novo_jogo.id}.jpg')
+    timestamp = time.time()
+    arquivo.save(f'{upload_path}/capa{novo_jogo.id}-{timestamp}.jpg')
 
     return redirect(url_for('rotas.index'))
 
@@ -72,7 +74,6 @@ def autenticar():
 def editar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect(url_for('rotas.login', proxima=url_for('rotas.editar')))
-    
     jogo = Jogos.query.filter_by(id=id).first()
     capa_jogo = recupera_imagem(id)
     return render_template('editar.html', titulo='Editando Jogo', jogo=jogo, capa_jogo=capa_jogo)
@@ -89,10 +90,11 @@ def atualizar():
 
    db.session.add(jogo)
    db.session.commit()
-
+ 
    arquivo = request.files['arquivo']
    upload_path = current_app.config['UPLOAD_PATH']
-   arquivo.save(f'{upload_path}/capa{jogo.id}.jpg')
+   timestamp = time.time()
+   arquivo.save(f'{upload_path}/capa{jogo.id}-{timestamp}.jpg')
 
 
    return redirect(url_for('rotas.index'))
