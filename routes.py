@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, session, flash, url_for, Blueprint, current_app , send_from_directory
 from models import Jogos, Usuarios
 from extension import db
-from helpers import recupera_imagem
+from helpers import recupera_imagem, deletar_arquivo
 import time
 
 
@@ -82,7 +82,7 @@ def editar(id):
 @rotas.route('/atualizar', methods=['POST'])
 def atualizar():
    
-   jogo = Jogos.query.filter_by(id= request.form['id']).first()
+   jogo = Jogos.query.filter_by(id=request.form['id']).first()
 
    jogo.nome = request.form['nome'] # type: ignore
    jogo.categoria = request.form['categoria'] # type: ignore
@@ -94,6 +94,7 @@ def atualizar():
    arquivo = request.files['arquivo']
    upload_path = current_app.config['UPLOAD_PATH']
    timestamp = time.time()
+   deletar_arquivo(jogo.id)
    arquivo.save(f'{upload_path}/capa{jogo.id}-{timestamp}.jpg')
 
 

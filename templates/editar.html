@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 {% block conteudo %}
-      <form action="{{ url_for('rotas.atualizar')}}" method="post" enctype="application/x-www-form-urlencoded">
+      <form action="{{ url_for('rotas.atualizar')}}" method="post" enctype="multipart/form-data">
 
         <figure class="img-thumbnail col-md-4"> 
           <img class= "img-fluid" src="{{url_for('rotas.imagem', nome_arquivo=capa_jogo)}}">
