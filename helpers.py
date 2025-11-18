@@ -1,6 +1,6 @@
 import os 
 from flask import current_app
-from flask_wtf import FlaskForm #flask-wtf serve para integrar o flask com o wtforms
+from flask_wtf import FlaskForm #flask-wtf serve para integrar o flask com o wtformss
 from wtforms import StringField, validators, SubmitField #campos + validadores
 
 
