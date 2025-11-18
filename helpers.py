@@ -1,5 +1,14 @@
 import os 
 from flask import current_app
+from flask_wtf import FlaskForm #flask-wtf serve para integrar o flask com o wtforms
+from wtforms import StringField, validators, SubmitField #campos + validadores
+
+
+class FormularioJogo(FlaskForm):
+   nome = StringField('Nome do jogo',[validators.DataRequired(), validators.length(min=1, max=50)])
+   categoria = StringField('Categoria',[validators.DataRequired(), validators.length(min=1, max=40)])
+   nome = StringField('Console',[validators.DataRequired(), validators.length(min=1, max=20)])
+   salvar = SubmitField('Salvar')
 
 
 def recupera_imagem(id):
