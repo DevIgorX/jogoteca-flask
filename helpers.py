@@ -23,4 +23,4 @@ def deletar_arquivo(id):
    arquivo = recupera_imagem(id)
    if arquivo != 'capa_padrao.png':
     caminho_upload = current_app.config['UPLOAD_PATH']
-    os.remove(os.path.join(caminho_upload, arquivo))
+    os.remove(os.path.join(caminho_upload, arquivo)) #
