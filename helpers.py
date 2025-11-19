@@ -7,7 +7,7 @@ from wtforms import StringField, validators, SubmitField #campos + validadores
 class FormularioJogo(FlaskForm):
    nome = StringField('Nome do jogo',[validators.DataRequired(), validators.length(min=1, max=50)])
    categoria = StringField('Categoria',[validators.DataRequired(), validators.length(min=1, max=40)])
-   nome = StringField('Console',[validators.DataRequired(), validators.length(min=1, max=20)])
+   console = StringField('Console',[validators.DataRequired(), validators.length(min=1, max=20)])
    salvar = SubmitField('Salvar')
 
 

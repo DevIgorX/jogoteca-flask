@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, session, flash, url_for, Blueprint, current_app , send_from_directory
 from models import Jogos, Usuarios
 from extension import db
-from helpers import recupera_imagem, deletar_arquivo
+from helpers import recupera_imagem, deletar_arquivo, FormularioJogo
 import time
 
 
@@ -17,13 +17,20 @@ def index():
 def novo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect(url_for('rotas.login', proxima=url_for('rotas.novo'))) #proxima=url_for('novo') esse paramentro, vai virar uma query string na URL do login, exemplo: /login?proxima=/novo
-    return render_template('novo.html', titulo='Novo Jogo')
+    
+    form = FormularioJogo()
+    return render_template('novo.html', titulo='Novo Jogo', form=form)
 
 @rotas.route('/criar', methods=['POST',])
 def criar():
-    nome = request.form['nome']
-    categoria = request.form['categoria']
-    console = request.form['console']
+    form = FormularioJogo(request.form) #para capturar as informações que está sendo enviada no formulario
+
+    if not form.validate_on_submit(): #retorna true ou false dependedo se o formulario estará validado ou não 
+      return redirect(url_for('rotas.novo'))
+    
+    nome = form.nome.data
+    categoria = form.categoria.data
+    console = form.console.data
     
     jogo = Jogos.query.filter_by(nome=nome).first()
 
