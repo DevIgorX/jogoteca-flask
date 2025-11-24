@@ -28,7 +28,7 @@ def criar():
     if not form.validate_on_submit(): #retorna true ou false dependedo se o formulario estará validado ou não 
       return redirect(url_for('rotas.novo'))
     
-    nome = form.nome.data
+    nome = form.nome.data #quando usamos a propriedade "data" queremos acessar o valor do input
     categoria = form.categoria.data
     console = form.console.data
     
@@ -81,9 +81,15 @@ def autenticar():
 def editar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect(url_for('rotas.login', proxima=url_for('rotas.editar')))
+    
     jogo = Jogos.query.filter_by(id=id).first()
+    form = FormularioJogo()
+    form.nome.data = jogo.nome 
+    form.categoria.data = jogo.categoria
+    form.console.data = jogo.console 
+
     capa_jogo = recupera_imagem(id)
-    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo, capa_jogo=capa_jogo)
+    return render_template('editar.html', titulo='Editando Jogo', id=id, capa_jogo=capa_jogo, form=form)
 
 
 @rotas.route('/atualizar', methods=['POST'])
