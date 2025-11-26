@@ -61,9 +61,9 @@ def editar(id):
     jogo = Jogos.query.filter_by(id=id).first()
 
     form = FormularioJogo()
-    form.nome.data = jogo.nome 
-    form.categoria.data = jogo.categoria
-    form.console.data = jogo.console 
+    form.nome.data = jogo.nome  # type: ignore
+    form.categoria.data = jogo.categoria # type: ignore
+    form.console.data = jogo.console  # type: ignore
 
     capa_jogo = recupera_imagem(id)
     return render_template('editar.html', titulo='Editando Jogo', id=id, capa_jogo=capa_jogo, form=form)
@@ -87,8 +87,8 @@ def atualizar():
     arquivo = request.files['arquivo']
     upload_path = current_app.config['UPLOAD_PATH']
     timestamp = time.time()
-    deletar_arquivo(jogo.id)
-    arquivo.save(f'{upload_path}/capa{jogo.id}-{timestamp}.jpg')
+    deletar_arquivo(jogo.id) # type: ignore
+    arquivo.save(f'{upload_path}/capa{jogo.id}-{timestamp}.jpg') # type: ignore
 
 
    return redirect(url_for('rotas.index'))

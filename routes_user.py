@@ -17,20 +17,26 @@ def login():
 def autenticar():
     form = FormularioUsuario(request.form)
     usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
-    senha = check_password_hash(usuario.senha, form.senha.data) # type: ignore
+    
+    # Verifica se o usuário existe antes de checar a senha
+    senha = check_password_hash(usuario.senha, form.senha.data) if usuario else False
 
     if usuario and senha:
         session['usuario_logado'] = usuario.nickname
         flash(usuario.nickname + ' logado com sucesso!')
-        proxima_pagina = request.form['proxima']
-        if proxima_pagina:
-            return redirect(proxima_pagina)
         
+        proxima_pagina = request.form['proxima']
+        
+        # AQUI ESTÁ A CORREÇÃO PRINCIPAL:
+        # Verificamos se proxima_pagina não é a palavra 'None'
+        if proxima_pagina and proxima_pagina != 'None':
+            return redirect(proxima_pagina)
         else:
-            flash('Senha incorreta.')
-            return redirect(url_for('rotas.login'))
+            # Se não tiver próxima página, vai para o início (index)
+            return redirect(url_for('rotas.index'))
+            
     else:
-        flash('Usuário não logado.')
+        flash('Usuário ou senha incorretos.')
         return redirect(url_for('rotas.login'))
     
 
