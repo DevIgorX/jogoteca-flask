@@ -8,10 +8,12 @@ import time
 
 rotas = Blueprint('rotas',__name__)
 
+
 @rotas.route('/')
 def index():
     lista = Jogos.query.order_by(Jogos.id)
-    return render_template('lista.html', titulo='Jogos', jogos=lista)
+    # ADICIONEI O , recupera_imagem=recupera_imagem NO FINAL DA LINHA ABAIXO
+    return render_template('lista.html', titulo='Jogos', jogos=lista, recupera_imagem=recupera_imagem)
 
 @rotas.route('/novo')
 def novo():

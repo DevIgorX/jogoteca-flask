@@ -1,29 +1,39 @@
 {% extends "template.html" %}
 {% block conteudo %}
-        <a class="btn btn-primary" href="{{url_for('rotas.login')}}">Login</a>
-        <a class="btn btn-danger" href="{{url_for('rotas.logout')}}">logout</a>
-        <a class="btn btn-primary" href="{{url_for('rotas.novo')}}">Novo</a>
-        <table class="table table-striped table-responsive table-bordered">
-            <thead class="thead-default">
-                <tr>
-                    <th>Nome</th>
-                    <th>Categoria</th>
-                    <th>Console</th>
-                    <th>Editar</th>
-                    <th>Deletar</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for jogo in jogos %}
-                <tr>
-                    <td>{{ jogo.nome }}</td>
-                    <td>{{ jogo.categoria }}</td>
-                    <td>{{ jogo.console }}</td>
-                    <td><a href="{{url_for('rotas.editar', id=jogo.id )}}">Editar</a> </td>
-                    <th><a href="{{url_for('rotas.deletar', id=jogo.id )}}">Deletar</a> </th>
-                </tr>
-                {% endfor %}
 
-            </tbody>
-        </table>
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div class="page-header">
+            <h1>{{ titulo }}</h1>
+        </div>
+        <a class="btn btn-primary btn-lg" href="{{url_for('rotas.novo')}}">
+            + Novo Jogo
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for jogo in jogos %}
+        <div class="col">
+            <div class="card h-100">
+                <div style="height: 200px; overflow: hidden; background-color: #121214; display: flex; align-items: center; justify-content: center;">
+                    <img src="{{ url_for('rotas.imagem', nome_arquivo=recupera_imagem(jogo.id)) }}" class="card-img-top" alt="Capa do Jogo" style="object-fit: cover; height: 100%; width: 100%; opacity: 0.8;">
+                </div>
+                
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ jogo.nome }}</h5>
+                    <h6 class="card-subtitle mb-2">{{ jogo.console }}</h6>
+                    
+                    <p class="card-text mt-auto">
+                        <span class="badge bg-dark border border-secondary">{{ jogo.categoria }}</span>
+                    </p>
+                </div>
+                
+                <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between pb-3">
+                    <a href="{{url_for('rotas.editar', id=jogo.id )}}" class="btn btn-sm btn-outline-light w-50 me-2">Editar</a>
+                    <a href="{{url_for('rotas.deletar', id=jogo.id )}}" class="btn btn-sm btn-outline-danger w-50">Deletar</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

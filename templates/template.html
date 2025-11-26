@@ -8,24 +8,40 @@
     <link rel="stylesheet" href="{{url_for('static', filename='app.css')}}">
   </head>
   <body>
-    <div class="container">
+    
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <div class="container-fluid container">
+        <a class="navbar-brand" href="{{ url_for('rotas.index') }}">🎮 Jogoteca</a>
+        <div class="d-flex">
+            {% if 'usuario_logado' in session and session['usuario_logado'] %}
+                <span class="navbar-text me-3 text-white">
+                    Olá, <strong>{{ session['usuario_logado'] }}</strong>
+                </span>
+                <a class="btn btn-outline-danger btn-sm" href="{{url_for('rotas.logout')}}">Sair</a>
+            {% else %}
+                <a class="btn btn-primary btn-sm" href="{{url_for('rotas.login')}}">Login</a>
+            {% endif %}
+        </div>
+      </div>
+    </nav>
 
+    <div class="container">
         {% with messages = get_flashed_messages() %}
             {% if messages %} 
-                <ul id="messages" class="list-unstyled">
+                <ul id="messages" class="list-unstyled mt-3">
                 {% for message in messages %}
-                    <li class="alert alert-success">{{ message }}</li>
+                    <li class="alert alert-info">{{ message }}</li>
                 {% endfor %}
                 </ul>
             {% endif %}
         {% endwith %}
 
-        <div class="page-header">
-            <h1>{{ titulo }}</h1>
-        </div>
         {% block conteudo %}{% endblock %}
 
-        
+        <footer class="mt-5 mb-3 text-center text-muted">
+            <small>&copy; Jogoteca - Desenvolvido com Flask</small>
+        </footer>
+
         <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
     </div>
