@@ -18,7 +18,7 @@ def autenticar():
     form = FormularioUsuario(request.form)
     usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
     
-    # Verifica se o usuário existe antes de checar a senha
+    # Verifica se o usuário existe antes de checar a senha ---
     senha = check_password_hash(usuario.senha, form.senha.data) if usuario else False
 
     if usuario and senha:
