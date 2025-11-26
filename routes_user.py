@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, session, flash, url_for, B
 from models import Usuarios
 from helpers import  FormularioUsuario
 from routes_game import rotas
+from flask_bcrypt import check_password_hash
 
 
 
@@ -16,15 +17,15 @@ def login():
 def autenticar():
     form = FormularioUsuario(request.form)
     usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
-    if usuario:
-        if form.senha.data == usuario.senha:
-            session['usuario_logado'] = usuario.nickname
-            flash(usuario.nickname + ' logado com sucesso!')
-            proxima_pagina = request.form['proxima']
-            if proxima_pagina:
-             return redirect(proxima_pagina)
+    senha = check_password_hash(usuario.senha, form.senha.data) # type: ignore
+
+    if usuario and senha:
+        session['usuario_logado'] = usuario.nickname
+        flash(usuario.nickname + ' logado com sucesso!')
+        proxima_pagina = request.form['proxima']
+        if proxima_pagina:
+            return redirect(proxima_pagina)
         
-            return redirect(url_for('rotas.index'))
         else:
             flash('Senha incorreta.')
             return redirect(url_for('rotas.login'))

@@ -1,4 +1,5 @@
 import sqlite3
+from flask_bcrypt import generate_password_hash
 
 print("Conectando ao SQLite...")
 
@@ -34,9 +35,9 @@ for nome, sql_code in TABLES.items():
 
 # Inserir usuários (evita duplicados usando INSERT OR IGNORE)
 usuarios = [
-    ("Bruno Divino", "BD", "alohomora"),
-    ("Camila Ferreira", "Mila", "paozinho"),
-    ("Guilherme Louro", "Cake", "python_eh_vida")
+    ("Bruno Divino", "BD", generate_password_hash("alohomora").decode('utf-8')),
+    ("Camila Ferreira", "Mila", generate_password_hash("paozinho").decode('utf-8')),
+    ("Guilherme Louro", "Cake", generate_password_hash("python_eh_vida").decode('utf-8'))
 ]
 cursor.executemany(
     'INSERT OR IGNORE INTO usuarios (nome, nickname, senha) VALUES (?, ?, ?)',
