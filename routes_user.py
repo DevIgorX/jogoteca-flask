@@ -18,7 +18,7 @@ def autenticar():
     form = FormularioUsuario(request.form)
     usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
     
-    # Verifica se o usuário existe antes de checar a senha ---
+    
     senha = check_password_hash(usuario.senha, form.senha.data) if usuario else False
 
     if usuario and senha:
@@ -27,12 +27,11 @@ def autenticar():
         
         proxima_pagina = request.form['proxima']
         
-        # AQUI ESTÁ A CORREÇÃO PRINCIPAL:
-        # Verificamos se proxima_pagina não é a palavra 'None'
+        
         if proxima_pagina and proxima_pagina != 'None':
             return redirect(proxima_pagina)
         else:
-            # Se não tiver próxima página, vai para o início (index)
+            
             return redirect(url_for('rotas.index'))
             
     else:

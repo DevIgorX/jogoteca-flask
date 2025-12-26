@@ -1,0 +1,19 @@
+
+.style_list {
+    height: 200px;
+    overflow: hidden;
+    background-color: #121214; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+
+
+.capa_jogo {
+    object-fit: cover; 
+    height: 100%; 
+    width: 100%; 
+    opacity: 0.8
+
+}

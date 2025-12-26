@@ -12,7 +12,7 @@ rotas = Blueprint('rotas',__name__)
 @rotas.route('/')
 def index():
     lista = Jogos.query.order_by(Jogos.id)
-    # ADICIONEI O , recupera_imagem=recupera_imagem NO FINAL DA LINHA ABAIXO
+   
     return render_template('lista.html', titulo='Jogos', jogos=lista, recupera_imagem=recupera_imagem)
 
 @rotas.route('/novo')
@@ -108,5 +108,5 @@ def deletar(id):
 
 @rotas.route('/uploads/<nome_arquivo>')
 def imagem(nome_arquivo):
-    return send_from_directory('uploads', nome_arquivo) #pega a imagem no diretorio e retorna, no caso pega a imagem do coputador e envia para a tela do usuario
+    return send_from_directory('uploads', nome_arquivo) #pega a imagem no diretorio e retorna, no caso pega a imagem do computador e envia para a tela do usuario
 
