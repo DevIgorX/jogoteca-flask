@@ -6,6 +6,7 @@
     <title>Jogoteca</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
     <link rel="stylesheet" href="{{url_for('static', filename='app.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='list.css')}}">
   </head>
   <body>
     
@@ -20,6 +21,7 @@
                 <a class="btn btn-outline-danger btn-sm" href="{{url_for('rotas.logout')}}">Sair</a>
             {% else %}
                 <a class="btn btn-primary btn-sm" href="{{url_for('rotas.login')}}">Login</a>
+                <a class="btn btn-primary btn-sm ms-3" href="#">Cadastrar</a>
             {% endif %}
         </div>
       </div>

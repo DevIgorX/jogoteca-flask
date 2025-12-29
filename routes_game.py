@@ -5,14 +5,13 @@ from helpers import recupera_imagem, deletar_arquivo, FormularioJogo
 import time
 
 
-
 rotas = Blueprint('rotas',__name__)
 
 
 @rotas.route('/')
 def index():
     lista = Jogos.query.order_by(Jogos.id)
-    # ADICIONEI O , recupera_imagem=recupera_imagem NO FINAL DA LINHA ABAIXO
+    # recupera_imagem=recupera_imagem NO FINAL DA LINHA ABAIXO
     return render_template('lista.html', titulo='Jogos', jogos=lista, recupera_imagem=recupera_imagem)
 
 @rotas.route('/novo')
@@ -33,6 +32,9 @@ def criar():
     nome = form.nome.data #quando usamos a propriedade "data" queremos acessar o valor do input
     categoria = form.categoria.data
     console = form.console.data
+
+
+    
     
     jogo = Jogos.query.filter_by(nome=nome).first() #verificar se o jogo existe e o salva na variavel jogo
 

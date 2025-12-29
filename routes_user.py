@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session, flash, url_for, Blueprint
+from flask import render_template, request, redirect, session, flash, url_for
 from models import Usuarios
 from helpers import  FormularioUsuario
 from routes_game import rotas
@@ -17,9 +17,16 @@ def login():
 def autenticar():
     form = FormularioUsuario(request.form)
     usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
-    
-    # Verifica se o usuário existe antes de checar a senha ---
-    senha = check_password_hash(usuario.senha, form.senha.data) if usuario else False
+
+    # Verifica se o usuário existe antes de checar a senha
+    senha = check_password_hash(usuario.senha, form.senha.data) if usuario else False #if ternário (valor_se_sim if condição else valor_se_não)
+
+        #codigo equivalente
+
+#    if usuario:
+#     senha = check_password_hash(usuario.senha, form.senha.data)
+#    else:
+#     senha = False
 
     if usuario and senha:
         session['usuario_logado'] = usuario.nickname
@@ -45,5 +52,8 @@ def logout():
     session['usuario_logado'] = None
     flash('Logout efetuado com sucesso!')
     return redirect(url_for('rotas.index'))
+
+
+# @rotas.route()
 
     
