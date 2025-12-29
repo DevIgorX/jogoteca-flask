@@ -10,29 +10,6 @@
     </a>
 </div>
 
-<<<<<<< HEAD
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for jogo in jogos %}
-        <div class="col">
-            <div class="card h-100">
-                <div class="list">
-                    <img src="{{ url_for('rotas.imagem', nome_arquivo=recupera_imagem(jogo.id)) }}" class="card-img-top img_list" alt="Capa do Jogo" >
-                </div>
-                
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{ jogo.nome }}</h5>
-                    <h6 class="card-subtitle mb-2">{{ jogo.console }}</h6>
-                    
-                    <p class="card-text mt-auto">
-                        <span class="badge bg-dark border border-secondary">{{ jogo.categoria }}</span>
-                    </p>
-                </div>
-                
-                <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between pb-3">
-                    <a href="{{url_for('rotas.editar', id=jogo.id )}}" class="btn btn-sm btn-outline-light w-50 me-2">Editar</a>
-                    <a href="{{url_for('rotas.deletar', id=jogo.id )}}" class="btn btn-sm btn-outline-danger w-50">Deletar</a>
-                </div>
-=======
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for jogo in jogos %}
     <div class="col">
@@ -56,7 +33,6 @@
                     class="btn btn-sm btn-outline-light w-50 me-2">Editar</a>
                 <a href="{{url_for('rotas.deletar', id=jogo.id )}}"
                     class="btn btn-sm btn-outline-danger w-50">Deletar</a>
->>>>>>> 8e200e4dd8a5640ed5c6d4435c0792f9998c1262
             </div>
         </div>
     </div>

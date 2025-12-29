@@ -17,22 +17,9 @@ def login():
 def autenticar():
     form = FormularioUsuario(request.form)
     usuario = Usuarios.query.filter_by(nickname=form.nickname.data).first()
-<<<<<<< HEAD
-
-    # Verifica se o usuário existe antes de checar a senha
-    senha = check_password_hash(usuario.senha, form.senha.data) if usuario else False #if ternário (valor_se_sim if condição else valor_se_não)
-
-        #codigo equivalente
-
-#    if usuario:
-#     senha = check_password_hash(usuario.senha, form.senha.data)
-#    else:
-#     senha = False
-=======
     
     
     senha = check_password_hash(usuario.senha, form.senha.data) if usuario else False
->>>>>>> 8e200e4dd8a5640ed5c6d4435c0792f9998c1262
 
     if usuario and senha:
         session['usuario_logado'] = usuario.nickname
@@ -44,11 +31,7 @@ def autenticar():
         if proxima_pagina and proxima_pagina != 'None':
             return redirect(proxima_pagina)
         else:
-<<<<<<< HEAD
-            # Se não tiver próxima página, vai para o início (index)-
-=======
             
->>>>>>> 8e200e4dd8a5640ed5c6d4435c0792f9998c1262
             return redirect(url_for('rotas.index'))
             
     else:
@@ -63,4 +46,4 @@ def logout():
     return redirect(url_for('rotas.index'))
 
 
-    
+    # Fim do arquivo routes_user.py
