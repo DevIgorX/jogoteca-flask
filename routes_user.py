@@ -39,7 +39,7 @@ def autenticar():
         if proxima_pagina and proxima_pagina != 'None':
             return redirect(proxima_pagina)
         else:
-            # Se não tiver próxima página, vai para o início (index)
+            # Se não tiver próxima página, vai para o início (index)-
             return redirect(url_for('rotas.index'))
             
     else:
@@ -53,7 +53,5 @@ def logout():
     flash('Logout efetuado com sucesso!')
     return redirect(url_for('rotas.index'))
 
-
-# @rotas.route()
 
     
