@@ -1,8 +1,9 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from models import Usuarios
-from helpers import  FormularioUsuario
+from helpers import  FormularioUsuario, FormularioCadastro
 from routes_game import rotas
-from flask_bcrypt import check_password_hash
+from flask_bcrypt import check_password_hash , generate_password_hash
+from extension import db
 
 
 
@@ -46,4 +47,36 @@ def logout():
     return redirect(url_for('rotas.index'))
 
 
-    # Fim do arquivo routes_user.py
+@rotas.route('/cadastrar')
+def cadastrar():
+    form = FormularioCadastro()
+    return render_template('cadastrar.html', form=form)
+
+@rotas.route('/registrar', methods=['POST'])
+def registrar():
+
+    form = FormularioCadastro(request.form)
+
+    if not form.validate_on_submit():
+        return redirect(url_for('rotas.cadastrar'))
+    
+
+    nome = form.nome.data
+    nickname = form.nickname.data
+    senha = form.senha.data
+    
+    usuario = Usuarios.query.filter_by(nickname=nickname).first()
+
+    if usuario:
+        flash('já existe usuario com esse nickname, tente novamente!')
+        return redirect(url_for('rotas.cadastrar'))
+
+    senha_criptografada = generate_password_hash(senha).decode('utf-8')
+
+
+    novo_usuario = Usuarios(nickname=nickname, nome=nome, senha=senha_criptografada) #type: ignore
+    db.session.add(novo_usuario)
+    db.session.commit()
+
+    flash('Usuario Cadastrado com Sucesso!')
+    return redirect(url_for('rotas.index'))

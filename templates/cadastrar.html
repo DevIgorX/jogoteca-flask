@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogoteca</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %} 
+            <ul id="messages" class="list-unstyled">
+            {% for message in messages %}
+                <li class="alert alert-success">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-5">
+
+            <h1 class="text-center mb-4">Faça seu Cadastro</h1>
+
+            <form method="POST" action="{{ url_for('rotas.registrar') }}">
+                {{ form.csrf_token() }}
+
+                <div class="mb-3">
+                    {{ form.nome.label(class="form-label") }}
+                    {{ form.nome(class="form-control") }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.nickname.label(class="form-label") }}
+                    {{ form.nickname(class="form-control") }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.senha.label(class="form-label") }}
+                    {{ form.senha(class="form-control") }}
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    {{ form.cadastrar(class="btn btn-primary") }}
+                    <a href="{{ url_for('rotas.index') }}" class="btn btn-danger">Voltar</a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

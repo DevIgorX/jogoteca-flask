@@ -18,3 +18,4 @@ class Usuarios(db.Model):
 
     def __repr__(self):
         return '<Name %r>' % self.nickname
+

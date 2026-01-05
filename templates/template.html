@@ -21,7 +21,7 @@
                 <a class="btn btn-outline-danger btn-sm" href="{{url_for('rotas.logout')}}">Sair</a>
             {% else %}
                 <a class="btn btn-primary btn-sm" href="{{url_for('rotas.login')}}">Login</a>
-                <a class="btn btn-primary btn-sm ms-3" href="#">Cadastrar</a>
+                <a class="btn btn-primary btn-sm ms-3" href="{{url_for('rotas.cadastrar')}}">Cadastrar</a>
             {% endif %}
         </div>
       </div>

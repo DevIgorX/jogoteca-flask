@@ -34,8 +34,6 @@ def criar():
     console = form.console.data
 
 
-    
-    
     jogo = Jogos.query.filter_by(nome=nome).first() #verificar se o jogo existe e o salva na variavel jogo
 
     if jogo:

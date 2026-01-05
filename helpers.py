@@ -16,6 +16,11 @@ class FormularioUsuario(FlaskForm):
    senha = PasswordField('Senha', [validators.DataRequired(), validators.length(min=1, max=100)] )
    login = SubmitField('Login')
 
+class FormularioCadastro(FlaskForm):
+   nome = StringField('Nome do Usuario', [validators.DataRequired() , validators.length(min=1, max=50)])
+   nickname =  StringField('Nickname', [validators.DataRequired(), validators.length(min=1 , max=50)])
+   senha =  PasswordField('Senha', [validators.DataRequired(), validators.length(min=1, max=50)])
+   cadastrar = SubmitField('Cadastrar')
 
 
 def recupera_imagem(id):
